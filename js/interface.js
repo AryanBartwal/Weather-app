@@ -8,10 +8,20 @@ import {
 	updateCurrentTime,
 } from "./utils.js";
 
-import { todayContainerRef, weekContainerRef } from "./config.js";
+import { todayContainerRef, weekContainerRef, defaultCityName } from "./config.js";
 
 export const setInterface = ({ city, list }, currentDayData) => {
-	const { name: cityName, country, sunrise, sunset } = city;
+	let { name: cityName, country, sunrise, sunset } = city;
+	// Force cityName to 'Dehradun' if coordinates match default
+	if (
+		city.coord &&
+		city.coord.lat === 30.3165 &&
+		city.coord.lon === 78.0322 &&
+		cityName !== defaultCityName
+	) {
+		cityName = defaultCityName;
+	}
+
 	const isDayTime = checkDayTime(sunset, sunrise);
 
 	// slice the next four objects which is 3 hours apart
@@ -137,7 +147,7 @@ export const setInterface = ({ city, list }, currentDayData) => {
 		document.documentElement.setAttribute("data-theme", "day");
 	}
 
-	// document.documentElement.setAttribute("data-weather", currentWeatherType);
+	// document.documentElement.setAttribute("data_weather", currentWeatherType);
 	document.documentElement.setAttribute("data-weather", currentWeatherType);
 
 	// the input box change place in the dom depending on the size of the window

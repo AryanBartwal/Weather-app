@@ -1,4 +1,9 @@
 import { errorMessages } from "../config.js";
+
+export function clearErrorMessages() {
+	if (errorMessages) errorMessages.innerHTML = "";
+}
+
 import { createErrorMessage } from "../utils.js";
 
 export function getUserLocation() {
@@ -10,21 +15,12 @@ export function getUserLocation() {
 
 		navigator.geolocation.getCurrentPosition(
 			({ coords }) => {
+				clearErrorMessages();
 				resolve(coords);
 			},
 			(error) => {
-				reject(error);
-				console.log(
-					"GeoLocation error, unable to fetch location: " + error.message
-				);
-				// handle the error when user denies access.
-				// send to the default location.
-				// show a message saying the user denied access to geolocation
-				// access to location denied. please search for a location manually.
-				createErrorMessage(
-					"Access to location denied. please search for a location manually",
-					5000
-				);
+				// Don't show any error message if user denies location, just resolve with null
+				resolve(null);
 			}
 		);
 	});

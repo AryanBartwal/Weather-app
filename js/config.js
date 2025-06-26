@@ -2,7 +2,8 @@ export const API_KEY = "085590031a30567d9813303060a2063c";
 
 export const API_URL = "https://api.openweathermap.org";
 
-export const [autoLat, autoLong] = [51.50722, -0.1275]; // London coords
+export const [autoLat, autoLong] = [30.3165, 78.0322]; // Dehradun coords
+export const defaultCityName = "Dehradun";
 
 export const mediumScreen = 760;
 export const searchBarRef = document.querySelector("[data-search-bar]");

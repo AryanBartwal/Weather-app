@@ -23,10 +23,13 @@ export const getWeather = async (latitude, longitude) => {
 export const getAutoGeoLocation = async () => {
 	// try to get automatic location using the browser location.
 	try {
-		const { latitude, longitude } = await getUserLocation();
-		getWeather(latitude, longitude);
+		const coords = await getUserLocation();
+		if (coords && coords.latitude && coords.longitude) {
+			getWeather(coords.latitude, coords.longitude);
+		} else {
+			getWeather(autoLat, autoLong);
+		}
 	} catch (error) {
-		// if is denied, then return the default location (London)
 		getWeather(autoLat, autoLong);
 	}
 };
