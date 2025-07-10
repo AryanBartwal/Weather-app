@@ -1,0 +1,13 @@
+{
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "postcss.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "css": "css",
+    "scss": "scss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}
