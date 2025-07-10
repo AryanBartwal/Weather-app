@@ -2,6 +2,8 @@
 
 A beautiful, modern weather application built with **React** and **Tailwind CSS**. Get accurate weather forecasts with a premium user experience featuring glassmorphism design, smooth animations, and responsive layouts.
 
+🌐 **[Live Demo](https://weatherapp-7n78i6j7s-aryanbartwals-projects.vercel.app)**
+
 ## ✨ Features
 
 - **Real-time Weather Data**: Powered by OpenWeatherMap API
@@ -25,7 +27,7 @@ A beautiful, modern weather application built with **React** and **Tailwind CSS*
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/AryanBartwal/Weather-app.git
 cd weatherapp
 ```
 
@@ -94,6 +96,12 @@ WeatherVibe focuses on providing a premium weather experience through:
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## 👨‍💻 Author
+
+**Aryan Bartwal**
+- GitHub: [@AryanBartwal](https://github.com/AryanBartwal)
+- Project Repository: [Weather-app](https://github.com/AryanBartwal/Weather-app)
 
 ---
 
