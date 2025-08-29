@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 
 // Common city list for autocomplete suggestions
 const popularCities = [
@@ -18,17 +18,26 @@ const AutocompleteSearch = ({ searchQuery, setSearchQuery, handleSearch, handleL
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
+  const [isMobile, setIsMobile] = useState(false);
   const inputRef = useRef(null);
   const suggestionRef = useRef(null);
 
-  // Filter suggestions based on input
+  // Check if device is mobile
   useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setSuggestions([]);
-      return;
-    }
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
-    const filteredSuggestions = popularCities
+  // Memoized filtered suggestions with debouncing for mobile performance
+  const filteredSuggestions = useMemo(() => {
+    if (searchQuery.trim() === '') return [];
+
+    return popularCities
       .filter(city => city.toLowerCase().includes(searchQuery.toLowerCase()))
       .sort((a, b) => {
         // Prioritize matches at beginning of word
@@ -36,10 +45,17 @@ const AutocompleteSearch = ({ searchQuery, setSearchQuery, handleSearch, handleL
         const bStartsWith = b.toLowerCase().startsWith(searchQuery.toLowerCase()) ? 0 : 1;
         return aStartsWith - bStartsWith || a.localeCompare(b);
       })
-      .slice(0, 5); // Limit to 5 suggestions
+      .slice(0, isMobile ? 3 : 5); // Reduce suggestions on mobile
+  }, [searchQuery, isMobile]);
 
-    setSuggestions(filteredSuggestions);
-  }, [searchQuery]);
+  // Update suggestions with debouncing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuggestions(filteredSuggestions);
+    }, isMobile ? 150 : 100); // Longer debounce on mobile
+
+    return () => clearTimeout(timer);
+  }, [filteredSuggestions, isMobile]);
 
   // Handle click outside to close suggestions
   useEffect(() => {

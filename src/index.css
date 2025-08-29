@@ -34,9 +34,38 @@
       radial-gradient(circle at 10% 20%, rgba(0, 255, 240, 0.2) 0%, transparent 25%),
       radial-gradient(circle at 90% 80%, rgba(255, 77, 131, 0.2) 0%, transparent 25%),
       radial-gradient(circle at 50% 50%, rgba(24, 24, 46, 1) 0%, rgba(10, 10, 18, 1) 100%);
-    background-attachment: fixed;
+    /* Remove background-attachment: fixed for mobile performance */
     color: #f0f9ff;
     color-scheme: dark;
+    /* Add hardware acceleration */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Mobile performance optimizations */
+  @media (max-width: 768px) {
+    body {
+      /* Simplified background for mobile */
+      background-image: linear-gradient(135deg, rgba(24, 24, 46, 1) 0%, rgba(10, 10, 18, 1) 100%);
+    }
+    
+    /* Reduce blur effects on mobile */
+    .backdrop-blur-lg {
+      backdrop-filter: blur(8px) !important;
+    }
+    
+    .backdrop-blur-xl {
+      backdrop-filter: blur(10px) !important;
+    }
+    
+    /* Disable heavy animations on mobile */
+    .animate-float-wave {
+      animation: none !important;
+    }
+    
+    .animate-pulse-glow {
+      animation: pulse-glow-mobile 3s ease-in-out infinite !important;
+    }
   }
   
   /* Custom scrollbar */
@@ -87,18 +116,22 @@
   }
   
   /* Card styles - Futuristic cyber neon look */
+    /* Glass card with hardware acceleration */
   .glass-card {
-    background: rgba(24, 24, 46, 0.6);
+    background: rgba(24, 24, 46, 0.3);
     backdrop-filter: blur(16px);
-    border-radius: 24px;
     border: 1px solid rgba(0, 255, 240, 0.2);
+    border-radius: 24px;
     box-shadow: 
-      0 4px 20px rgba(0, 131, 255, 0.15),
-      0 1px 3px rgba(0, 0, 0, 0.2),
-      inset 0 1px 1px rgba(0, 255, 240, 0.05);
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.2),
+      inset 0 1px 1px rgba(0, 255, 240, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
   }
   
   .glass-card::before {
@@ -111,15 +144,23 @@
     background: linear-gradient(90deg, transparent, rgba(0, 255, 240, 0.5), transparent);
     opacity: 0;
     transition: opacity 0.5s;
+    transform: translateZ(0);
   }
   
   .glass-card-hover:hover {
-    transform: translateY(-4px) scale(1.01);
+    transform: translateZ(0) translateY(-4px) scale(1.01);
     box-shadow: 
       0 15px 30px rgba(0, 131, 255, 0.2),
       0 6px 10px rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(0, 255, 240, 0.3),
       inset 0 1px 1px rgba(0, 255, 240, 0.1);
+  }
+  
+  /* Mobile-specific optimizations */
+  @media (max-width: 768px) {
+    .glass-card-hover:hover {
+      transform: translateZ(0) translateY(-2px) scale(1.005);
+    }
   }
   
   .glass-card-hover:hover::before {
@@ -189,7 +230,7 @@
     text-shadow: 0 0 5px rgba(0, 255, 240, 0.5);
   }
   
-  /* New button styles */
+  /* New button styles with mobile optimization */
   .btn-primary {
     background: var(--gradient-neon);
     color: #f0f9ff;
@@ -202,10 +243,12 @@
       0 0 0 1px rgba(0, 255, 240, 0.2);
     letter-spacing: 0.5px;
     text-shadow: 0 0 5px rgba(0, 255, 240, 0.5);
+    transform: translateZ(0);
+    will-change: transform;
   }
   
   .btn-primary:hover {
-    transform: translateY(-3px);
+    transform: translateZ(0) translateY(-3px);
     box-shadow: 
       0 8px 20px rgba(0, 131, 255, 0.4),
       0 0 0 2px rgba(0, 255, 240, 0.3),
@@ -213,7 +256,21 @@
   }
   
   .btn-primary:active {
-    transform: translateY(-1px);
+    transform: translateZ(0) translateY(-1px);
+  }
+  
+  /* Mobile button optimizations */
+  @media (max-width: 768px) {
+    .btn-primary:hover {
+      transform: translateZ(0) translateY(-1px);
+      box-shadow: 
+        0 4px 12px rgba(0, 131, 255, 0.3),
+        0 0 0 1px rgba(0, 255, 240, 0.2);
+    }
+    
+    .btn-primary:active {
+      transform: translateZ(0);
+    }
   }
   
   /* Additional style variations */
@@ -243,15 +300,42 @@
     padding: 16px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateZ(0);
+    will-change: transform;
   }
   
   .stat-card:hover {
     background: rgba(24, 24, 46, 0.7);
-    transform: translateY(-5px);
+    transform: translateZ(0) translateY(-5px);
     box-shadow: 
       0 10px 20px rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(0, 255, 240, 0.3),
       0 0 15px rgba(0, 131, 255, 0.2);
+  }
+  
+  /* Mobile optimizations for stat cards */
+  @media (max-width: 768px) {
+    .stat-card:hover {
+      transform: translateZ(0) translateY(-2px);
+      box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(0, 255, 240, 0.2);
+    }
+  }
+  
+  /* Performance optimization: Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .glass-card-hover:hover,
+    .btn-primary:hover,
+    .stat-card:hover {
+      transform: none;
+    }
+    
+    .animate-float-wave,
+    .animate-pulse-glow,
+    .animate-pulse-slow {
+      animation: none;
+    }
   }
 }
 
@@ -261,9 +345,25 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes pulse-glow-mobile {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Optimized animation with GPU acceleration */
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translate3d(0, -10px, 0); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translate3d(0, 0, 0); 
+  }
 }
 
 @keyframes shine {
@@ -272,11 +372,11 @@
 }
 
 @keyframes float-wave {
-  0% { transform: translateY(0) translateX(0) rotate(0); }
-  25% { transform: translateY(-10px) translateX(5px) rotate(2deg); }
-  50% { transform: translateY(0) translateX(0) rotate(0); }
-  75% { transform: translateY(10px) translateX(-5px) rotate(-2deg); }
-  100% { transform: translateY(0) translateX(0) rotate(0); }
+  0% { transform: translate3d(0, 0, 0) rotate(0); }
+  25% { transform: translate3d(5px, -10px, 0) rotate(2deg); }
+  50% { transform: translate3d(0, 0, 0) rotate(0); }
+  75% { transform: translate3d(-5px, 10px, 0) rotate(-2deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0); }
 }
 
 @keyframes reveal-text {
